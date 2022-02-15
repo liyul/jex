@@ -1,4 +1,4 @@
-package xmlMVC;
+package net.sourceforge.jex.xmlMVC;
 
 public interface XMLUpdateObserver {
 	

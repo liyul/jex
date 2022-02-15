@@ -1,4 +1,4 @@
-package xmlMVC;
+package net.sourceforge.jex.xmlMVC;
 
 import java.io.File;
 import java.io.InputStream;

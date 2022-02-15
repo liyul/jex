@@ -1,4 +1,4 @@
-package xmlMVC;
+package net.sourceforge.jex.xmlMVC;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;

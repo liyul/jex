@@ -1,4 +1,4 @@
-package xmlMVC;
+package net.sourceforge.jex.xmlMVC;
 
 import javax.swing.Box;
 import javax.swing.Icon;

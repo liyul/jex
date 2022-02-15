@@ -1,4 +1,4 @@
-package xmlMVC;
+package net.sourceforge.jex.xmlMVC;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

@@ -1,4 +1,4 @@
-package xmlMVC;
+package net.sourceforge.jex.xmlMVC;
 
 import java.util.ArrayList;
 import java.util.Iterator;
