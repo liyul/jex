@@ -16,6 +16,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.apache.commons.io.input.BOMInputStream;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -47,6 +48,14 @@ public class XMLModel implements XMLUpdateObserver, SelectionObserver{
 	
 	// default constructor, instantiates empty ArrayList, then creates new View. 
 	public XMLModel() {
+		initModel(true);
+	}
+	
+	public XMLModel(boolean intro) {
+		initModel(intro);
+	}
+
+	private void initModel(boolean intro) {
 		currentFile = new File("file");
 		
 		xmlObservers = new ArrayList<XMLUpdateObserver>();
@@ -55,7 +64,7 @@ public class XMLModel implements XMLUpdateObserver, SelectionObserver{
 		
 		tree = new Tree(this, this);
 
-		new XMLView(this);
+		new XMLView(this, intro);
 	}	
 	
 	public void openXMLFile(File xmlFile) {
@@ -113,7 +122,7 @@ public class XMLModel implements XMLUpdateObserver, SelectionObserver{
             DocumentBuilderFactory.newInstance();
         //factory.setValidating(true);   
         //factory.setNamespaceAware(true);
-        
+        BOMInputStream bis = null;
         try {
            DocumentBuilder builder = factory.newDocumentBuilder();
 
@@ -143,7 +152,10 @@ public class XMLModel implements XMLUpdateObserver, SelectionObserver{
                    }
                  ); 
 
-           document = builder.parse( xmlFile );
+           bis = new BOMInputStream(new FileInputStream(xmlFile));
+           document = builder.parse( bis );
+           bis.close();
+           bis = null;
            
         } catch (SAXException sxe) {
             // Error generated during parsing)
@@ -159,6 +171,14 @@ public class XMLModel implements XMLUpdateObserver, SelectionObserver{
          } catch (IOException ioe) {
             // I/O error
             ioe.printStackTrace();
+         } finally {
+             if (bis != null) {
+             	try {
+ 					bis.close();
+ 				} catch (IOException e) {
+ 					e.printStackTrace();
+ 				}
+             }
          }
 	}
 	

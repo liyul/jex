@@ -83,18 +83,29 @@ public class XMLView implements XMLUpdateObserver, SelectionObserver {
 	
     public XMLView(XMLModel xmlModel) {
     	
-    	this.xmlModel = xmlModel;
+    	initView(xmlModel, true);
+    	
+    }
+    
+    public XMLView(XMLModel xmlModel, boolean intro) {
+    	
+    	initView(xmlModel, intro);
+    	
+    }
+
+
+	private void initView(XMLModel xmlModel, boolean intro) {
+		this.xmlModel = xmlModel;
     	
     	xmlModel.addXMLObserver(this);
     	xmlModel.addSelectionObserver(this);
     	
     	xmlRootNode = xmlModel.getRootNode();
     	
-    	buildUI();
-    	
-    }
+    	buildUI(intro);
+	}
     
-	public void buildUI() {
+	public void buildUI(boolean intro) {
 		
 		XMLFrame = new JFrame("JEX - Java Easy Xml editor");
 		
@@ -296,20 +307,22 @@ public class XMLView implements XMLUpdateObserver, SelectionObserver {
 		
 		// an intro splash-screen to get users started
 //		Custom button text
-		Icon bigStartIcon = ImageFactory.getInstance().getIcon(ImageFactory.BIG_SOURCE_ICON);
-		Object[] options = {"Start new XML file",
-		                    "Open existing file",
-		                    "Cancel"};
-		int n = JOptionPane.showOptionDialog(XMLFrame, "<html>Welcome to the JEX, Java Easy Xml editor. <br>"
-		    + "Please choose an otpion to get you started.</html>", "Welcome",
-		    JOptionPane.YES_NO_CANCEL_OPTION,
-		    JOptionPane.QUESTION_MESSAGE,
-		    bigStartIcon,
-		    options,
-		    options[0]);
-		
-		if (n == 0) newXmlFile();
-		else if (n == 1) openFile();
+		if (intro) {
+			Icon bigStartIcon = ImageFactory.getInstance().getIcon(ImageFactory.BIG_SOURCE_ICON);
+			Object[] options = {"Start new XML file",
+			                    "Open existing file",
+			                    "Cancel"};
+			int n = JOptionPane.showOptionDialog(XMLFrame, "<html>Welcome to the JEX, Java Easy Xml editor. <br>"
+			    + "Please choose an otpion to get you started.</html>", "Welcome",
+			    JOptionPane.YES_NO_CANCEL_OPTION,
+			    JOptionPane.QUESTION_MESSAGE,
+			    bigStartIcon,
+			    options,
+			    options[0]);
+			
+			if (n == 0) newXmlFile();
+			else if (n == 1) openFile();
+		}
 	}
 
 	
